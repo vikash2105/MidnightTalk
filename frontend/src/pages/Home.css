@@ -1,0 +1,136 @@
+.home-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #000000, #1a1a2e, #000000);
+  color: #fff;
+  font-family: 'Segoe UI', sans-serif;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  padding-top: 5rem;
+  padding-bottom: 4rem;
+  text-align: center;
+}
+
+.content-wrapper {
+  z-index: 2;
+  max-width: 800px;
+  padding: 0 20px;
+}
+
+.main-heading {
+  font-size: 3rem;
+  background: linear-gradient(to right, #ff4c8b, #9966ff);
+  
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.subheading {
+  color: #ccc;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto 2rem auto;
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 3rem;
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  border-radius: 30px;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  transition: 0.3s ease;
+  box-shadow: 0 0 10px #00000050;
+}
+
+.btn.primary {
+  background: #ff4c8b;
+  color: #fff;
+}
+.btn.primary:hover {
+  background: #e2437d;
+}
+
+.btn.secondary {
+  background: #2c2c38;
+  color: #fff;
+}
+.btn.secondary:hover {
+  background: #3c3c4c;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  width: 220px;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.feature-card .icon {
+  color: #ff4c8b;
+  margin-bottom: 0.8rem;
+}
+
+.feature-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.feature-card p {
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+.footer {
+  margin-top: 4rem;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+/* Glows */
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(150px);
+  opacity: 0.2;
+}
+
+.glow.pink {
+  top: -100px;
+  left: -150px;
+  width: 400px;
+  height: 400px;
+  background: #ff4c8b;
+}
+
+.glow.purple {
+  bottom: 0;
+  right: -100px;
+  width: 400px;
+  height: 400px;
+  background: #9966ff;
+}

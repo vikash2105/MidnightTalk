@@ -1,0 +1,10 @@
+# Root .gitignore
+# Ignore node_modules for both frontend and backend
+node_modules/
+build/
+.env
+.vscode/
+.DS_Store
+
+# Ignore build output
+frontend/build/
