@@ -13,6 +13,7 @@ import Home from './pages/Home';
 import Session from "./pages/Session";
 import Wallet from "./pages/Wallet";
 import Queue from "./pages/Queue";
+import ListenerQueue from "./pages/ListenerQueue";  // ✅ Add this import
 import Kyc from "./pages/Kyc";
 import Earnings from "./pages/Earnings";
 
@@ -25,7 +26,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        
+
         <Route
           path="/dashboard"
           element={
@@ -55,6 +56,13 @@ function App() {
         />
 
         <Route
+          path="/listener-queue"
+          element={
+            isAuthenticated ? <ListenerQueue /> : <Navigate to="/login" replace />
+          }
+        />
+
+        <Route
           path="/kyc"
           element={
             isAuthenticated ? <Kyc /> : <Navigate to="/login" replace />
@@ -71,8 +79,8 @@ function App() {
         <Route
           path="*"
           element={
-            <div className="flex justify-center items-center h-screen">
-              <h2 className="text-2xl text-flame">404 - Page Not Found</h2>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+              <h2 style={{ fontSize: '24px', color: '#FF5722' }}>404 - Page Not Found</h2>
             </div>
           }
         />
