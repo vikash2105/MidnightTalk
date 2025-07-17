@@ -8,15 +8,15 @@ dotenv.config();
 
 const app = express();
 
-// ✅ CORS Configuration: Allow frontend on Vercel
+// ✅ CORS Configuration: Allow frontend on Vercel & local dev
 app.use(cors({
-   origin: ['http://localhost:3000', 'https://midnighttalk.vercel.app'],
+  origin: ['http://localhost:3000', 'https://midnighttalk.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
-// ✅ Middleware
+// ✅ Middleware to parse JSON
 app.use(express.json());
 
 // ✅ Routes
@@ -39,7 +39,8 @@ const startServer = async () => {
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running at https://midnighttalk.vercel.app:${PORT}`);
+      console.log(`🚀 Backend running on port ${PORT}`);
+      console.log(`🌐 API base: https://midnighttalk.onrender.com/api`);
     });
 
   } catch (err) {
