@@ -8,18 +8,18 @@ dotenv.config();
 
 const app = express();
 
-// ✅ CORS Configuration (Allow Render Frontend)
+// ✅ CORS Configuration: Allow frontend on Vercel
 app.use(cors({
-  origin: process.env.CLIENT_URL || "https://midnighttalk.vercel.app/", // Your frontend domain
+  origin: process.env.CLIENT_URL || "https://midnighttalk.vercel.app",
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }));
 
-// ✅ Middleware to parse JSON
+// ✅ Middleware
 app.use(express.json());
 
-// ✅ API Routes
+// ✅ Routes
 app.use("/api/auth", authRoutes);
 
 // ✅ Health Check Route
@@ -27,23 +27,23 @@ app.get("/", (req, res) => {
   res.send("✅ Backend is running and healthy!");
 });
 
-// ✅ Database Connection + Server Startup
+// ✅ MongoDB Connection + Start Server
 const startServer = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
+    await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true
     });
 
-    console.log(`✅ MongoDB connected: ${conn.connection.host}`);
+    console.log("✅ Connected to MongoDB");
 
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Server running at https://midnighttalk.vercel.app:${PORT}`);
     });
 
   } catch (err) {
-    console.error("❌ MongoDB connection failed:", err.message);
+    console.error("❌ MongoDB connection error:", err.message);
     process.exit(1);
   }
 };
