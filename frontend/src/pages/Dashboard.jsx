@@ -13,7 +13,7 @@ const Dashboard = () => {
 
     if (role === "speaker") {
       baseActions.push(
-        { label: "Start a Session", path: "/session" },
+        { label: "Start a Session", path: "/Room" },
         { label: "Recharge Wallet", path: "/wallet" }
       );
     } else if (role === "listener") {
