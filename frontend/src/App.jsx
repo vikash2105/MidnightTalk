@@ -49,13 +49,6 @@ function App() {
         />
 
         <Route
-          path="/queue"
-          element={
-            isAuthenticated ? <Queue /> : <Navigate to="/login" replace />
-          }
-        />
-
-        <Route
           path="/listener-queue"
           element={
             isAuthenticated ? <ListenerQueue /> : <Navigate to="/login" replace />
