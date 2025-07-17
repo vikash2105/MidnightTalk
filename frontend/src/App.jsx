@@ -12,7 +12,6 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Session from "./pages/Session";
 import Wallet from "./pages/Wallet";
-import Queue from "./pages/Queue";
 import ListenerQueue from "./pages/ListenerQueue";  // ✅ Add this import
 import Kyc from "./pages/Kyc";
 import Earnings from "./pages/Earnings";
