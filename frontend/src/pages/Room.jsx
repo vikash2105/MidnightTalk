@@ -1,41 +1,91 @@
-import React, { useEffect, useState } from "react";
-import socket from "../utils/socket";
+// /frontend/src/pages/Room.jsx
+import React, { useEffect, useRef, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { socket } from "../socket"; // your socket instance
+import {
+  createPeer,
+  addPeerTrackListeners,
+  removePeerTrackListeners,
+} from "../peer"; // your peer helper
 
-const Room = ({ roomId }) => {
-  const [messages, setMessages] = useState([]);
-  const [text, setText] = useState("");
+const Room = () => {
+  const { roomId } = useParams();
+  const location = useLocation();
+  const role = location.state?.role || "listener";
+
+  const localAudioRef = useRef(null);
+  const remoteAudioRef = useRef(null);
+  const [peerConnection, setPeerConnection] = useState(null);
 
   useEffect(() => {
-    socket.emit("join-room", roomId);
+    const setupMedia = async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        localAudioRef.current.srcObject = stream;
 
-    socket.on("receive-message", ({ message, sender }) => {
-      setMessages(prev => [...prev, { message, sender }]);
-    });
+        const peer = createPeer(); // RTCPeerConnection
+        stream.getTracks().forEach((track) => peer.addTrack(track, stream));
+
+        setPeerConnection(peer);
+
+        socket.emit("join-room", { roomId, role });
+
+        socket.on("offer", async ({ offer, from }) => {
+          await peer.setRemoteDescription(offer);
+          const answer = await peer.createAnswer();
+          await peer.setLocalDescription(answer);
+          socket.emit("answer", { answer, to: from });
+        });
+
+        socket.on("answer", async ({ answer }) => {
+          await peer.setRemoteDescription(answer);
+        });
+
+        socket.on("ice-candidate", async ({ candidate }) => {
+          if (candidate) {
+            await peer.addIceCandidate(candidate);
+          }
+        });
+
+        peer.onicecandidate = (e) => {
+          if (e.candidate) {
+            socket.emit("ice-candidate", { candidate: e.candidate, roomId });
+          }
+        };
+
+        peer.ontrack = (event) => {
+          remoteAudioRef.current.srcObject = event.streams[0];
+        };
+      } catch (error) {
+        console.error("Error setting up media:", error);
+      }
+    };
+
+    setupMedia();
 
     return () => {
-      socket.off("receive-message");
+      if (peerConnection) {
+        removePeerTrackListeners(peerConnection);
+        peerConnection.close();
+      }
+      socket.disconnect();
     };
   }, [roomId]);
 
-  const sendMessage = () => {
-    socket.emit("send-message", { roomId, message: text });
-    setText("");
-  };
-
   return (
-    <div>
-      <h2>Room: {roomId}</h2>
+    <div style={{ padding: "2rem" }}>
+      <h2>Audio Room: {roomId}</h2>
+      <p>Role: {role}</p>
+
       <div>
-        {messages.map((msg, idx) => (
-          <p key={idx}><strong>{msg.sender}:</strong> {msg.message}</p>
-        ))}
+        <h4>Local Audio</h4>
+        <audio ref={localAudioRef} autoPlay controls muted />
       </div>
-      <input
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-        placeholder="Type your message"
-      />
-      <button onClick={sendMessage}>Send</button>
+
+      <div>
+        <h4>Remote Audio</h4>
+        <audio ref={remoteAudioRef} autoPlay controls />
+      </div>
     </div>
   );
 };
