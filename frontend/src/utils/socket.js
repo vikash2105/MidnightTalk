@@ -1,42 +1,44 @@
 // /frontend/src/utils/socket.js
-
 import { io } from "socket.io-client";
 
-// Change this to your Render backend URL or localhost during dev
 const SERVER_URL = process.env.REACT_APP_API_URL || "https://midnighttalk.onrender.com";
 
-// Initialize socket instance
+// Singleton socket instance
 const socket = io(SERVER_URL, {
-  transports: ["websocket"], // Ensures WebSocket over polling
-  autoConnect: false,        // Connect manually (more control)
+  transports: ["websocket"],
+  autoConnect: false, // Manual connection
 });
 
-// Socket connection functions
-
-// Start the connection (call after login or room join)
-export const connectSocket = () => {
-  if (!socket.connected) socket.connect();
+// Start connection
+export const connectSocket = (token, roomId) => {
+  if (!socket.connected) {
+    socket.auth = { token, roomId }; // pass auth info before connect
+    socket.connect();
+  }
 };
 
-// Disconnect when leaving room or logging out
+// Disconnect socket
 export const disconnectSocket = () => {
-  if (socket.connected) socket.disconnect();
+  if (socket.connected) {
+    socket.disconnect();
+  }
 };
 
-// Emit events
+// Emit custom event
 export const emitEvent = (event, data) => {
-  if (socket.connected) socket.emit(event, data);
+  if (socket.connected) {
+    socket.emit(event, data);
+  }
 };
 
-// Listen to events
+// Add listener
 export const onEvent = (event, callback) => {
   socket.on(event, callback);
 };
 
-// Stop listening (optional cleanup)
+// Remove listener
 export const offEvent = (event) => {
   socket.off(event);
 };
 
-// Export socket instance for signaling
 export default socket;

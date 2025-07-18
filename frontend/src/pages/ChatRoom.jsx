@@ -24,7 +24,6 @@ const ChatRoom = () => {
     }
   };
 
-  // Scroll to bottom on new messages
   useEffect(() => {
     if (bottomRef.current) {
       bottomRef.current.scrollIntoView({ behavior: 'smooth' });
@@ -35,12 +34,14 @@ const ChatRoom = () => {
     <div style={styles.container}>
       <h2 style={styles.title}>Chat Room - {roomId}</h2>
 
-      {!isConnected && <p style={styles.warning}>Connecting to socket...</p>}
+      {!isConnected && (
+        <p style={styles.warning}>🔌 Connecting to socket...</p>
+      )}
 
       <div style={styles.chatBox}>
         {messages.map((msg, index) => (
           <div key={index} style={styles.message}>
-            <strong style={styles.sender}>{msg.sender}:</strong> {msg.message}
+            <strong style={styles.sender}>{msg.sender || 'Anonymous'}:</strong> {msg.message}
           </div>
         ))}
         <div ref={bottomRef} />
