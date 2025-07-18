@@ -8,14 +8,15 @@ export const useChatSocket = (token, roomId) => {
   useEffect(() => {
     if (!token || !roomId) return;
 
-    const socket = io('http://localhost:5000', {
+    const socket = io(process.env.REACT_APP_API_URL, {
       query: { token, roomId },
+      transports: ['websocket'], // Optional: Forces WebSocket only
     });
 
     socketRef.current = socket;
 
     socket.on('connect', () => {
-      console.log('Connected to socket server');
+      console.log('✅ Connected to socket server');
     });
 
     socket.on('message', (message) => {
