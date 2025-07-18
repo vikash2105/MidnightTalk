@@ -16,22 +16,42 @@ export default function Home() {
         transition={{ duration: 0.9 }}
         className="content-wrapper"
       >
+        {/* Hero Section */}
         <h1 className="main-heading">MidnightTalk 🌙</h1>
         <p className="subheading">
           Swipe into deep emotional connections. Talk, vent, feel — no judgment, no names.
         </p>
 
+        {/* Buttons for Login/SignUp */}
         <div className="buttons">
-          <Link to="/login"><button className="btn primary">Log In</button></Link>
-          <Link to="/register"><button className="btn secondary">Sign Up</button></Link>
+          <Link to="/login">
+            <button className="btn primary">Log In</button>
+          </Link>
+          <Link to="/register">
+            <button className="btn secondary">Sign Up</button>
+          </Link>
         </div>
 
+        {/* Features Section */}
         <div className="features">
-          <Feature icon={<Flame size={36} />} title="Real Conversations" desc="No small talk. Dive deep with strangers who understand." />
-          <Feature icon={<ShieldCheck size={36} />} title="Anonymous & Safe" desc="No identity. No judgment. Just support and empathy." />
-          <Feature icon={<Moon size={36} />} title="Night-Mode First" desc="Built for quiet nights, late thoughts, and deep feelings." />
+          <Feature
+            icon={<Flame size={36} />}
+            title="Real Conversations"
+            desc="No small talk. Dive deep with strangers who understand."
+          />
+          <Feature
+            icon={<ShieldCheck size={36} />}
+            title="Anonymous & Safe"
+            desc="No identity. No judgment. Just support and empathy."
+          />
+          <Feature
+            icon={<Moon size={36} />}
+            title="Night-Mode First"
+            desc="Built for quiet nights, late thoughts, and deep feelings."
+          />
         </div>
 
+        {/* Footer */}
         <footer className="footer">© 2025 MidnightTalk. All rights reserved.</footer>
       </motion.div>
     </div>
@@ -42,8 +62,8 @@ function Feature({ icon, title, desc }) {
   return (
     <div className="feature-card">
       <div className="icon">{icon}</div>
-      <h3>{title}</h3>
-      <p>{desc}</p>
+      <h3 className="feature-title">{title}</h3>
+      <p className="feature-desc">{desc}</p>
     </div>
   );
 }
