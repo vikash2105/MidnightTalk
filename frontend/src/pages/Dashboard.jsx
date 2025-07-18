@@ -12,16 +12,15 @@ const Dashboard = () => {
     const baseActions = [];
 
     if (role === "speaker") {
-      baseActions.push(
-        { label: "Start a Session", path: "/session" },
-        { label: "Recharge Wallet", path: "/wallet" }
-      );
+      baseActions.push({
+        label: "Start a Session",
+        path: "/session/midnight-room",
+      });
     } else if (role === "listener") {
-      baseActions.push(
-        { label: "Join Listener Queue", path: "/queue" },
-        { label: "Upload KYC", path: "/upload-kyc" },
-        { label: "Earnings", path: "/earnings" }
-      );
+      baseActions.push({
+        label: "Join a Session",
+        path: "/session/midnight-room",
+      });
     } else if (role === "admin") {
       baseActions.push(
         { label: "Approve KYC", path: "/admin/kyc" },
