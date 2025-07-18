@@ -5,7 +5,7 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
-import './styles.css';
+import './index.css';
 
 import Register from './pages/Register';
 import Login from './pages/Login';
