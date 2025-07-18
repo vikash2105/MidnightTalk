@@ -1,38 +1,38 @@
-import { useEffect, useRef, useState } from 'react';
-import { connectSocket } from '../utils/socket';
+import { useEffect, useState, useRef } from 'react';
+import io from 'socket.io-client';
 
 export const useChatSocket = (token, roomId) => {
-  const socketRef = useRef(null);
   const [messages, setMessages] = useState([]);
+  const socketRef = useRef(null);
 
   useEffect(() => {
     if (!token || !roomId) return;
 
-    const socket = connectSocket(token);
+    const socket = io('http://localhost:5000', {
+      query: { token, roomId },
+    });
+
     socketRef.current = socket;
 
     socket.on('connect', () => {
-      console.log("🟢 Socket connected");
-      socket.emit('joinRoom', roomId);
+      console.log('Connected to socket server');
     });
 
-    socket.on('receiveMessage', (msg) => {
-      setMessages((prev) => [...prev, msg]);
+    socket.on('message', (message) => {
+      setMessages((prev) => [...prev, message]);
     });
 
-    socket.on('panic', () => {
-      alert("❌ Session was ended by the other user.");
-      socket.disconnect();
-    });
+    socket.emit('join', { roomId });
 
     return () => {
       socket.disconnect();
     };
   }, [token, roomId]);
 
-  const sendMessage = (msg) => {
-    if (!msg.trim()) return;
-    socketRef.current.emit('sendMessage', { roomId, message: msg });
+  const sendMessage = (message) => {
+    if (socketRef.current) {
+      socketRef.current.emit('message', { message });
+    }
   };
 
   return {

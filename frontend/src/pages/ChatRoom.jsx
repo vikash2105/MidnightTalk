@@ -7,7 +7,15 @@ const ChatRoom = () => {
   const { roomId } = useParams();
   const token = localStorage.getItem('token');
   const [input, setInput] = useState('');
-  const { socket, messages, sendMessage } = useChatSocket(token, roomId);
+
+  const { socket, messages = [], sendMessage } = useChatSocket(token, roomId);
+
+  const handleSend = () => {
+    if (input.trim() && sendMessage) {
+      sendMessage(input);
+      setInput('');
+    }
+  };
 
   return (
     <div style={styles.container}>
@@ -29,19 +37,12 @@ const ChatRoom = () => {
           placeholder="Type a message..."
           style={styles.input}
         />
-        <button
-          onClick={() => {
-            if (input.trim()) {
-              sendMessage(input);
-              setInput('');
-            }
-          }}
-          style={styles.sendButton}
-        >
+        <button onClick={handleSend} style={styles.sendButton}>
           Send
         </button>
       </div>
 
+      {/* ✅ Safe render only if socket is connected */}
       {socket && <VoiceCall socket={socket} roomId={roomId} />}
     </div>
   );
