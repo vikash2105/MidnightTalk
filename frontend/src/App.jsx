@@ -5,6 +5,7 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
+import './styles.css';
 
 import Register from './pages/Register';
 import Login from './pages/Login';
@@ -12,12 +13,17 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Session from "./pages/Session";
 import Wallet from "./pages/Wallet";
-import ListenerQueue from "./pages/ListenerQueue";  // ✅ Add this import
+import ListenerQueue from "./pages/ListenerQueue";
 import Kyc from "./pages/Kyc";
 import Earnings from "./pages/Earnings";
+import { ChatRoom } from './pages/ChatRoom'; // ✅ Import new page
 
 function App() {
-  const isAuthenticated = !!localStorage.getItem('token');
+  const token = localStorage.getItem('token');
+  const isAuthenticated = !!token;
+
+  // Optional: You can decode token here to get user role
+  // const { role } = JSON.parse(atob(token.split('.')[1])); // decode JWT payload
 
   return (
     <BrowserRouter future={{ v7_relativeSplatPath: true }}>
@@ -68,6 +74,19 @@ function App() {
           }
         />
 
+        {/* ✅ New ChatRoom route */}
+        <Route
+          path="/chat-room"
+          element={
+            isAuthenticated ? (
+              <ChatRoom token={token} roomId="midnight-room-001" /> // TEMP room ID
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        {/* 404 Fallback */}
         <Route
           path="*"
           element={
