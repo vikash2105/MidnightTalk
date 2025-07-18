@@ -66,10 +66,25 @@ export const VoiceCall = ({ socket, roomId }) => {
   }, [socket, roomId]);
 
   return (
-    <div className="mt-4">
-      <p className="text-sm text-gray-400">🔊 Voice connected</p>
+    <div style={styles.callContainer}>
       <audio ref={localAudio} autoPlay muted />
       <audio ref={remoteAudio} autoPlay />
+      <p style={styles.status}>Voice call active...</p>
     </div>
   );
+};
+
+const styles = {
+  callContainer: {
+    marginTop: '20px',
+    backgroundColor: '#2d2d2d',
+    padding: '10px',
+    borderRadius: '4px',
+    color: '#aaa',
+    textAlign: 'center',
+  },
+  status: {
+    fontSize: '14px',
+    marginTop: '10px',
+  },
 };
