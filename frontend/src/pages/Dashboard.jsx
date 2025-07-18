@@ -14,12 +14,12 @@ const Dashboard = () => {
     if (role === "speaker") {
       baseActions.push({
         label: "Start a Session",
-        path: "/room/midnight-room",
+        path: "/session",
       });
     } else if (role === "listener") {
       baseActions.push({
         label: "Join a Session",
-        path: "/room/midnight-room",
+        path: "/session",
       });
     } else if (role === "admin") {
       baseActions.push(

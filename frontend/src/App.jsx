@@ -14,7 +14,8 @@ import Wallet from './pages/Wallet';
 import ListenerQueue from './pages/ListenerQueue';
 import Kyc from './pages/Kyc';
 import Earnings from './pages/Earnings';
-import ChatRoom from './pages/ChatRoom'; // ✅ Use default import
+import ChatRoom from './pages/ChatRoom';
+import Session from './pages/Session'; // ✅ Add this import
 
 function App() {
   const token = localStorage.getItem('token');
@@ -62,7 +63,13 @@ function App() {
           }
         />
 
-        {/* ✅ Correct dynamic room route */}
+        <Route
+          path="/session"
+          element={
+            isAuthenticated ? <Session /> : <Navigate to="/login" replace />
+          }
+        />
+
         <Route
           path="/room/:roomId"
           element={
@@ -70,7 +77,6 @@ function App() {
           }
         />
 
-        {/* 🔥 404 Fallback */}
         <Route
           path="*"
           element={
