@@ -5,23 +5,20 @@ import {
   Route,
   Navigate
 } from 'react-router-dom';
+
 import Register from './pages/Register';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
-import Session from "./pages/Session";
-import Wallet from "./pages/Wallet";
-import ListenerQueue from "./pages/ListenerQueue";
-import Kyc from "./pages/Kyc";
-import Earnings from "./pages/Earnings";
-import { ChatRoom } from './pages/ChatRoom'; // ✅ Import new page
+import Wallet from './pages/Wallet';
+import ListenerQueue from './pages/ListenerQueue';
+import Kyc from './pages/Kyc';
+import Earnings from './pages/Earnings';
+import ChatRoom from './pages/ChatRoom'; // ✅ Use default import
 
 function App() {
   const token = localStorage.getItem('token');
   const isAuthenticated = !!token;
-
-  // Optional: You can decode token here to get user role
-  // const { role } = JSON.parse(atob(token.split('.')[1])); // decode JWT payload
 
   return (
     <BrowserRouter future={{ v7_relativeSplatPath: true }}>
@@ -34,13 +31,6 @@ function App() {
           path="/dashboard"
           element={
             isAuthenticated ? <Dashboard /> : <Navigate to="/login" replace />
-          }
-        />
-
-        <Route
-          path="/session"
-          element={
-            isAuthenticated ? <Session /> : <Navigate to="/login" replace />
           }
         />
 
@@ -72,19 +62,15 @@ function App() {
           }
         />
 
-        {/* ✅ New ChatRoom route */}
+        {/* ✅ Correct dynamic room route */}
         <Route
-          path="/chat-room"
+          path="/room/:roomId"
           element={
-            isAuthenticated ? (
-              <ChatRoom token={token} roomId="midnight-room-001" /> // TEMP room ID
-            ) : (
-              <Navigate to="/login" replace />
-            )
+            isAuthenticated ? <ChatRoom token={token} /> : <Navigate to="/login" replace />
           }
         />
 
-        {/* 404 Fallback */}
+        {/* 🔥 404 Fallback */}
         <Route
           path="*"
           element={

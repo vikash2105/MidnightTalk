@@ -1,12 +1,11 @@
-// /frontend/src/pages/Room.jsx
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import { socket } from "../socket"; // your socket instance
+import { socket } from "../socket";
 import {
   createPeer,
   addPeerTrackListeners,
   removePeerTrackListeners,
-} from "../peer"; // your peer helper
+} from "../peer";
 
 const Room = () => {
   const { roomId } = useParams();
@@ -23,7 +22,7 @@ const Room = () => {
         const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
         localAudioRef.current.srcObject = stream;
 
-        const peer = createPeer(); // RTCPeerConnection
+        const peer = createPeer();
         stream.getTracks().forEach((track) => peer.addTrack(track, stream));
 
         setPeerConnection(peer);

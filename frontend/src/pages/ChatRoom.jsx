@@ -1,14 +1,17 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { useChatSocket } from '../hooks/useChatSocket';
 import { VoiceCall } from '../components/VoiceCall';
 
-export const ChatRoom = ({ token, roomId }) => {
+const ChatRoom = () => {
+  const { roomId } = useParams();
+  const token = localStorage.getItem('token');
   const [input, setInput] = useState('');
   const { socket, messages, sendMessage } = useChatSocket(token, roomId);
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.title}>Chat Room</h2>
+      <h2 style={styles.title}>Chat Room - {roomId}</h2>
 
       <div style={styles.chatBox}>
         {messages.map((msg, index) => (
@@ -28,8 +31,10 @@ export const ChatRoom = ({ token, roomId }) => {
         />
         <button
           onClick={() => {
-            sendMessage(input);
-            setInput('');
+            if (input.trim()) {
+              sendMessage(input);
+              setInput('');
+            }
           }}
           style={styles.sendButton}
         >
@@ -91,3 +96,5 @@ const styles = {
     fontWeight: 'bold',
   },
 };
+
+export default ChatRoom;
