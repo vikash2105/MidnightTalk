@@ -132,7 +132,7 @@ const Login = () => {
 
 
       <div className="login-wrapper">
-        <div className="midnight-logo">Midnight</div> {/* Midnight Logo */}
+        <div className="midnight-logo">MidnightTalk 🌙</div> {/* Midnight Logo */}
 
         <motion.form
           initial={{ opacity: 0, y: 40 }}

@@ -127,7 +127,7 @@ const Register = () => {
 
       <div className="register-wrapper">
         {/* Midnight Logo */}
-        <div className="midnight-logo">Midnight</div>
+        <div className="midnight-logo">MidnightTalk 🌙</div>
 
         {/* Register Form */}
         <motion.form
