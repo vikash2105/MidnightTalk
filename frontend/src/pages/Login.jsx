@@ -23,104 +23,117 @@ const Login = () => {
 
   return (
     <>
-      <style>{`
-        /* General Page Style */
-        .login-wrapper {
-          min-height: 100vh;
-          background: linear-gradient(to bottom right, #0d0d0d, #1a1a2e, #0d0d0d);
-          color: white;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem;
-          font-family: 'Segoe UI', sans-serif;
-        }
+     <style>{`
+  /* General Layout */
+  .login-wrapper {
+    min-height: 100vh;
+    background: linear-gradient(to bottom right, #0d0d0d, #1a1a2e, #0d0d0d);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    font-family: 'Segoe UI', sans-serif;
+    position: relative;
+  }
 
-        /* "Midnight" Logo */
-        .midnight-logo {
-          position: absolute;
-          top: 1.5rem;
-          left: 1.5rem;
-          font-family: 'Great Vibes', cursive;
-          font-size: 2.5rem;
-          color: #ff4c8b;
-          text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-        }
+  /* Midnight logo in top-left corner */
+  .midnight-logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-family: 'Great Vibes', cursive;
+    font-size: 2rem;
+    color: #ff4c8b;
+    animation: fadeIn 1s ease-out;
+  }
 
-        /* Form Style */
-        .login-form {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(15px);
-          padding: 2.5rem;
-          border-radius: 20px;
-          max-width: 400px;
-          width: 100%;
-          box-shadow: 0 0 25px rgba(255, 76, 139, 0.1);
-        }
+  /* Form Styles */
+  .login-form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    padding: 2.5rem;
+    border-radius: 20px;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 0 25px rgba(255, 76, 139, 0.1);
+  }
 
-        /* Login Title */
-        .login-title {
-          font-size: 2rem;
-          font-weight: bold;
-          color: #ff4c8b;
-          margin-bottom: 2rem;
-          text-align: center;
-        }
+  .login-title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #ff4c8b;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
 
-        /* Input Fields */
-        .login-input {
-          width: 100%;
-          padding: 0.8rem 1rem;
-          margin-bottom: 1.5rem;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.07);
-          border: 1px solid #ff4c8b;
-          color: white;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-        }
+  /* Input Fields */
+  .login-input {
+    width: 100%;
+    padding: 0.9rem 1.2rem; /* Reduce padding to make it match the button */
+    margin-bottom: 1.2rem;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.07);
+    border: none;
+    color: white;
+    font-size: 1rem;
+    transition: 0.3s ease;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+  }
 
-        .login-input::placeholder {
-          color: #aaa;
-        }
+  .login-input::placeholder {
+    color: #aaa;
+  }
 
-        .login-input:focus {
-          background: rgba(255, 255, 255, 0.1);
-          outline: none;
-          border-color: #ff4c8b;
-        }
+  .login-input:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.15);
+  }
 
-        /* Button Style */
-        .login-btn {
-          width: 100%;
-          padding: 0.9rem 1.5rem;
-          background: #ff4c8b;
-          color: white;
-          border: none;
-          border-radius: 10px;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: 0.3s ease;
-        }
+  /* Login Button */
+  .login-btn {
+    width: 100%;
+    padding: 0.9rem 1.5rem;
+    background: #ff4c8b;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-sizing: border-box; /* Ensures button size is consistent */
+  }
 
-        .login-btn:hover {
-          background: #e2437d;
-        }
+  .login-btn:hover {
+    background: #e2437d;
+  }
 
-        @media (max-width: 480px) {
-          .login-form {
-            padding: 2rem;
-          }
-        }
-      `}</style>
+  /* Animation for logo */
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+      transform: translateX(-20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 480px) {
+    .login-form {
+      padding: 2rem;
+    }
+  }
+`}</style>
+
 
       <div className="login-wrapper">
-        {/* Midnight Logo */}
-        <div className="midnight-logo">Midnight</div>
+        <div className="midnight-logo">Midnight</div> {/* Midnight Logo */}
 
-        {/* Login Form */}
         <motion.form
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}

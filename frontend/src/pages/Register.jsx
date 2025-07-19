@@ -24,102 +24,105 @@ const Register = () => {
     <>
       <style>{`
         /* General Page Style */
-        .register-wrapper {
-          min-height: 100vh;
-          background: linear-gradient(to bottom right, #0d0d0d, #1a1a2e, #0d0d0d);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 2rem;
-          font-family: 'Segoe UI', sans-serif;
-          color: white;
-        }
+.register-wrapper {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #0d0d0d, #1a1a2e, #0d0d0d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+}
 
-        /* "Midnight" Logo */
-        .midnight-logo {
-          position: absolute;
-          top: 1.5rem;
-          left: 1.5rem;
-          font-family: 'Great Vibes', cursive;
-          font-size: 2.5rem;
-          color: #ff4c8b;
-          text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
-        }
+/* "Midnight" Logo */
+.midnight-logo {
+  position: absolute;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-family: 'Great Vibes', cursive;
+  font-size: 2.5rem;
+  color: #ff4c8b;
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.6);
+}
 
-        /* Form Style */
-        .register-form {
-          background: rgba(255, 255, 255, 0.05);
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          backdrop-filter: blur(15px);
-          padding: 2.5rem;
-          border-radius: 20px;
-          max-width: 420px;
-          width: 100%;
-          box-shadow: 0 0 25px rgba(255, 76, 139, 0.1);
-        }
+/* Form Style */
+.register-form {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(15px);
+  padding: 2.5rem;
+  border-radius: 20px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 0 25px rgba(255, 76, 139, 0.1);
+}
 
-        /* Register Title */
-        .register-title {
-          font-size: 2rem;
-          font-weight: bold;
-          color: #ff4c8b;
-          margin-bottom: 2rem;
-          text-align: center;
-        }
+/* Register Title */
+.register-title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff4c8b;
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-        /* Input Fields */
-        .register-input, .register-select {
-          width: 100%;
-          padding: 0.8rem 1rem;
-          margin-bottom: 1.2rem;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.07);
-          border: 1px solid #ff4c8b;
-          color: white;
-          font-size: 1rem;
-          transition: all 0.3s ease;
-        }
+/* Input Fields */
+.register-input, .register-select {
+  width: 100%;
+  padding: 0.9rem 1.2rem; /* Adjusted padding to match the button height */
+  margin-bottom: 1.2rem;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid #ff4c8b;
+  color: white;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* Ensures the padding does not affect the width */
+}
 
-        .register-input::placeholder {
-          color: #aaa;
-        }
+.register-input::placeholder {
+  color: #aaa;
+}
 
-        .register-input:focus {
-          background: rgba(255, 255, 255, 0.1);
-          outline: none;
-          border-color: #ff4c8b;
-        }
+.register-input:focus {
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  border-color: #ff4c8b;
+}
 
-        /* Select Dropdown */
-        .register-select {
-          background: rgba(255, 255, 255, 0.07);
-          color: #ccc;
-          border: 1px solid #ff4c8b;
-        }
+/* Select Dropdown */
+.register-select {
+  background: rgba(255, 255, 255, 0.07);
+  color: #ccc;
+  border: 1px solid #ff4c8b;
+}
 
-        /* Register Button Style */
-        .register-btn {
-          width: 100%;
-          padding: 0.9rem 1.5rem;
-          background: #ff4c8b;
-          color: white;
-          border: none;
-          border-radius: 10px;
-          font-weight: 600;
-          font-size: 1rem;
-          cursor: pointer;
-          transition: 0.3s ease;
-        }
+/* Register Button Style */
+.register-btn {
+  width: 100%;
+  padding: 0.9rem 1.5rem;
+  background: #ff4c8b;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: 0.3s ease;
+  box-sizing: border-box; /* Ensures the button width remains the same */
+}
 
-        .register-btn:hover {
-          background: #e2437d;
-        }
+.register-btn:hover {
+  background: #e2437d;
+}
 
-        @media (max-width: 480px) {
-          .register-form {
-            padding: 2rem;
-          }
-        }
+@media (max-width: 480px) {
+  .register-form {
+    padding: 2rem;
+  }
+}
+
       `}</style>
 
       <div className="register-wrapper">
