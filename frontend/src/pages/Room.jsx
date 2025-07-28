@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { socket } from "../socket";
@@ -17,6 +16,9 @@ const Room = () => {
   const remoteAudioRef = useRef(null);
   const [peerConnection, setPeerConnection] = useState(null);
 
+  const [message, setMessage] = useState("");
+  const [messages, setMessages] = useState([]);
+
   useEffect(() => {
     const setupMedia = async () => {
       try {
@@ -25,7 +27,6 @@ const Room = () => {
 
         const peer = createPeer();
         stream.getTracks().forEach((track) => peer.addTrack(track, stream));
-
         setPeerConnection(peer);
 
         socket.emit("join-room", { roomId, role });
@@ -56,6 +57,11 @@ const Room = () => {
         peer.ontrack = (event) => {
           remoteAudioRef.current.srcObject = event.streams[0];
         };
+
+        // Receive chat messages
+        socket.on("message", ({ sender, content, time }) => {
+          setMessages((prev) => [...prev, { sender, content, time }]);
+        });
       } catch (error) {
         console.error("Error setting up media:", error);
       }
@@ -72,20 +78,64 @@ const Room = () => {
     };
   }, [roomId]);
 
+  const sendMessage = () => {
+    if (!message.trim()) return;
+
+    const payload = {
+      roomId,
+      sender: role,
+      content: message,
+      time: new Date().toLocaleTimeString(),
+    };
+
+    socket.emit("message", payload);
+    setMessages((prev) => [...prev, payload]);
+    setMessage("");
+  };
+
   return (
-    <div style={{ padding: "2rem" }}>
-      <h2>Audio Room: {roomId}</h2>
-      <p>Role: {role}</p>
-
-      <div>
-        <h4>Local Audio</h4>
-        <audio ref={localAudioRef} autoPlay controls muted />
+    <div className="h-screen flex flex-col bg-gray-100">
+      <div className="p-4 bg-white shadow-md">
+        <h2 className="text-xl font-bold">Room: {roomId}</h2>
+        <p className="text-sm text-gray-500">Logged in as: {role}</p>
       </div>
 
-      <div>
-        <h4>Remote Audio</h4>
-        <audio ref={remoteAudioRef} autoPlay controls />
+      <div className="flex-1 overflow-y-auto p-4 space-y-3">
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`max-w-[75%] px-4 py-2 rounded-xl ${
+              msg.sender === role
+                ? "bg-blue-500 text-white self-end ml-auto"
+                : "bg-gray-200 text-black self-start"
+            }`}
+          >
+            <p className="text-sm">{msg.content}</p>
+            <p className="text-xs text-right opacity-60">{msg.time}</p>
+          </div>
+        ))}
       </div>
+
+      <div className="p-4 flex items-center bg-white border-t">
+        <input
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && sendMessage()}
+          className="flex-1 px-4 py-2 rounded-full border mr-2"
+          placeholder="Type a message..."
+        />
+        <button
+          onClick={sendMessage}
+          className="bg-blue-500 text-white px-4 py-2 rounded-full"
+        >
+          Send
+        </button>
+      </div>
+
+      {/* Audio Elements */}
+      <audio ref={localAudioRef} autoPlay controls muted className="hidden" />
+      <audio ref={remoteAudioRef} autoPlay controls className="hidden" />
     </div>
   );
 };
